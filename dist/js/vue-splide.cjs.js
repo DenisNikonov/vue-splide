@@ -2681,11 +2681,16 @@ const _sfc_main$1 = vue.defineComponent({
   setup(props, context) {
     const splide = vue.ref();
     const root = vue.ref();
+    let mountedOnce = false;
     vue.onMounted(() => {
+      if (mountedOnce) {
+        return;
+      }
       if (root.value) {
         splide.value = new Splide$1(root.value, props.options);
         bind(splide.value);
         splide.value.mount(props.extensions, props.transition);
+        mountedOnce = true;
       }
     });
     vue.onBeforeUnmount(() => {

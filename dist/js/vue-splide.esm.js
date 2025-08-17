@@ -2679,11 +2679,16 @@ const _sfc_main$1 = defineComponent({
   setup(props, context) {
     const splide = ref();
     const root = ref();
+    let mountedOnce = false;
     onMounted(() => {
+      if (mountedOnce) {
+        return;
+      }
       if (root.value) {
         splide.value = new Splide$1(root.value, props.options);
         bind(splide.value);
         splide.value.mount(props.extensions, props.transition);
+        mountedOnce = true;
       }
     });
     onBeforeUnmount(() => {
