@@ -66,12 +66,17 @@ export default defineComponent( {
   setup( props, context ) {
     const splide = ref<Splide>();
     const root   = ref<HTMLElement>();
-
+    let mountedOnce = false;
     onMounted( () => {
+      if ( mountedOnce ) {
+        return;
+      }
+      
       if ( root.value ) {
         splide.value = new Splide( root.value, props.options );
         bind( splide.value );
         splide.value.mount( props.extensions, props.transition );
+        mountedOnce = true;
       }
     } );
 
